@@ -23,7 +23,7 @@ Inside, you will find:
 
 ## 💻 Instructions to Run (Computers Only)
 
-To open and run the project on your computer in development mode, **you do not need to open Android Studio**. The entire process is managed directly from the console using these two commands:
+To open and run the project on your computer in development mode, you need to run these two commands in your terminal:
 
 1. **Install dependencies:** Open the terminal at the project root and download the necessary modules by running:
    ```bash
