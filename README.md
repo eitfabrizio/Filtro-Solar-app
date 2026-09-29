@@ -13,7 +13,7 @@ The app combines a modern web environment with a mobile container using **Capaci
 If you are looking for the direct installer to test the app on your mobile phone, you don't need to compile anything from the source code. The executable file is already available in this repository.
 
 You can find the installer and its specific usage guide at the following folder path:
-👉 `android/app/build/outputs/apk/release/`
+👉 `(https://github.com/eitfabrizio/Filtro-Solar-app/releases/tag/APK)`
 
 Inside, you will find:
 * 📱 **`app-release.apk`**: The final installer file for your phone.
