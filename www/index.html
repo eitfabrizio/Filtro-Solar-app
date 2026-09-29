@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consola Holográfica de Simulación Fotónica</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body { 
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+      background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+      color: #f8fafc; 
+      height: 100vh; 
+      display: flex; 
+      flex-direction: column; 
+      overflow: hidden; 
+    }
+    
+    /* Capa de Bloqueo de Identidad */
+    .login-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(2, 6, 23, 0.98); z-index: 100;
+      display: flex; justify-content: center; align-items: center;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .login-box {
+      background: rgba(30, 41, 59, 0.7); padding: 40px; border-radius: 24px;
+      border: 1px solid #0ea5e9; text-align: center; max-width: 420px; width: 100%;
+      box-shadow: 0 0 40px rgba(14, 165, 233, 0.25);
+      backdrop-filter: blur(12px);
+    }
+    .login-box h2 { color: #38bdf8; margin-bottom: 12px; font-size: 24px; font-weight: 700; }
+    .login-box p { color: #94a3b8; font-size: 14px; margin-bottom: 24px; line-height: 1.5; }
+    .login-box input {
+      width: 100%; padding: 14px; background: #020617; border: 1px solid #334155;
+      border-radius: 12px; color: #fff; font-size: 16px; margin-bottom: 20px; text-align: center;
+      transition: border-color 0.2s;
+    }
+    .login-box input:focus { border-color: #38bdf8; outline: none; box-shadow: 0 0 10px rgba(56, 189, 248, 0.2); }
+
+    header { 
+      background: rgba(15, 23, 42, 0.8); 
+      padding: 18px 40px; 
+      border-bottom: 1px solid rgba(14, 165, 233, 0.3); 
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      z-index: 10;
+      backdrop-filter: blur(8px);
+    }
+    header h1 { font-size: 22px; color: #38bdf8; font-weight: 700; letter-spacing: 0.5px; text-shadow: 0 0 12px rgba(56, 189, 248, 0.3); }
+    .project-tag { background: rgba(56, 189, 248, 0.1); padding: 6px 16px; border-radius: 20px; font-size: 12px; color: #38bdf8; font-weight: 600; border: 1px solid rgba(56, 189, 248, 0.3); }
+
+    /* Layout Adaptable */
+    .main-layout { flex: 1; display: grid; grid-template-columns: 1.1fr 1fr; gap: 30px; padding: 25px 40px; height: calc(100vh - 140px); }
+    
+    @media (max-width: 850px) {
+      .main-layout { grid-template-columns: 1fr; overflow-y: auto; height: auto; }
+      body { overflow-y: auto; height: auto; }
+    }
+
+    .visual-panel { 
+      background: rgba(15, 23, 42, 0.55); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.05); 
+      padding: 30px; display: flex; flex-direction: column; justify-content: space-between; 
+      position: relative; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6); backdrop-filter: blur(10px);
+    }
+    .setup-title { font-size: 12px; text-transform: uppercase; color: #38bdf8; letter-spacing: 2px; margin-bottom: 15px; font-weight: 700; opacity: 0.8; }
+    
+    .simulation-arena { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 35px; position: relative; min-height: 300px; }
+    
+    /* El Sol con animación fluida */
+    .sol-glow { 
+      width: 85px; height: 85px; background: #f59e0b; border-radius: 50%; 
+      box-shadow: 0 0 35px #f59e0b; transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      animation: pulsoSol 4s infinite ease-in-out;
+    }
+    @keyframes pulsoSol { 0%, 100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.04); opacity: 1; } }
+
+    /* Botella SODIS */
+    .container-bottle { 
+      width: 130px; height: 230px; border: 3px solid rgba(255, 255, 255, 0.25); 
+      border-radius: 24px 24px 12px 12px; position: relative; overflow: hidden; background: rgba(255, 255, 255, 0.02);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6), inset 0 0 20px rgba(255,255,255,0.05);
+    }
+    .container-bottle::before {
+      content: ''; position: absolute; top: 0; left: 12%; width: 15%; height: 100%;
+      background: linear-gradient(to right, rgba(255,255,255,0.12), rgba(255,255,255,0)); z-index: 5; pointer-events: none;
+    }
+    
+    .water-fluid { 
+      position: absolute; bottom: 0; left: 0; width: 100%; height: 75%; background: #4a2f13; 
+      transition: background 1.5s cubic-bezier(0.4, 0, 0.2, 1); animation: oleaje 5s infinite ease-in-out; transform-origin: bottom center;
+    }
+    @keyframes oleaje { 0%, 100% { transform: rotate(-0.5deg) scaleY(1); } 50% { transform: rotate(0.5deg) scaleY(1.02); } }
+    
+    .particula {
+      position: absolute; width: 7px; height: 7px; background: #84cc16; border-radius: 50%;
+      box-shadow: 0 0 10px #84cc16; opacity: 0.8; transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 1s; 
+      animation: flotar 3.5s infinite ease-in-out;
+    }
+    @keyframes flotar { 0%, 100% { transform: translateY(0) translateX(0); } 50% { transform: translateY(-12px) translateX(4px); } }
+
+    .controls-box { background: rgba(2, 6, 23, 0.7); padding: 20px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.05); }
+    .slider-container label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 10px; color: #94a3b8; font-weight: 500; }
+    input[type="range"] { width: 100%; accent-color: #38bdf8; cursor: pointer; margin-bottom: 15px; background: #1e293b; height: 6px; border-radius: 3px; }
+    
+    .action-btn { background: #0284c7; color: white; border: none; padding: 14px; border-radius: 10px; width: 100%; cursor: pointer; font-size: 15px; font-weight: 600; border: 1px solid rgba(56, 189, 248, 0.4); transition: all 0.2s; box-shadow: 0 4px 15px rgba(2, 132, 199, 0.2); }
+    .action-btn:hover { background: #0369a1; box-shadow: 0 4px 22px rgba(56, 189, 248, 0.4); }
+    .action-btn:disabled { background: #1e293b; border-color: #334155; color: #64748b; cursor: not-allowed; box-shadow: none; }
+
+    /* Panel de Narración */
+    .narrative-panel { background: rgba(2, 6, 23, 0.4); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.05); padding: 35px; display: flex; flex-direction: column; justify-content: space-between; }
+    .assistant-header { display: flex; align-items: center; gap: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 18px; }
+    .assistant-avatar { font-size: 26px; background: #1e293b; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid #38bdf8; box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); }
+    .assistant-meta h3 { font-size: 15px; color: #38bdf8; font-weight: 600; }
+    .assistant-meta p { font-size: 12px; color: #64748b; margin-top: 2px; }
+    
+    .dialogue-content-area { flex: 1; margin: 25px 0; overflow-y: auto; padding-right: 5px; }
+    .dialogue-title { font-size: 18px; font-weight: 700; color: #f8fafc; margin-bottom: 12px; border-left: 4px solid #10b981; padding-left: 12px; letter-spacing: 0.3px; }
+    .dialogue-body { font-size: 15px; line-height: 1.75; color: #cbd5e1; text-align: justify; }
+    
+    .footer-navigation { display: flex; justify-content: flex-end; }
+    .next-btn { background: #10b981; color: #022c22; border: none; padding: 14px 38px; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2); }
+    .next-btn:hover { background: #34d399; box-shadow: 0 4px 22px rgba(52, 211, 153, 0.4); }
+    .next-btn:disabled { background: #1e293b; color: #475569; cursor: not-allowed; box-shadow: none; }
+  </style>
+</head>
+<body>
+
+  <div id="pantallaLogin" class="login-overlay">
+    <div class="login-box">
+      <h2>Consola de Investigación</h2>
+      <p>Ingresa tu identidad para inicializar los módulos de simulación cuántico-fotónica.</p>
+      <input type="text" id="inputNombre" placeholder="Nombre del Investigador" autocomplete="off">
+      <button id="btnAcceder" class="action-btn">Acceder al Sistema</button>
+    </div>
+  </div>
+
+  <header>
+    <h1>Consola Holográfica de Simulación Fotónica</h1>
+    <div class="project-tag">MÓDULO SODIS v3.0</div>
+  </header>
+
+  <div class="main-layout">
+    <div class="visual-panel">
+      <div class="setup-title">Cámara de Reacción Lumínica</div>
+      <div class="simulation-arena">
+        <div id="sol" class="sol-glow"></div>
+        <div class="container-bottle">
+          <div id="agua" class="water-fluid"></div>
+          <div class="particula" style="top: 25%; left: 20%; animation-delay: 0s;"></div>
+          <div class="particula" style="top: 48%; left: 55%; animation-delay: 0.7s;"></div>
+          <div class="particula" style="top: 72%; left: 35%; animation-delay: 1.4s;"></div>
+          <div class="particula" style="top: 38%; left: 70%; animation-delay: 2.1s;"></div>
+        </div>
+      </div>
+      <div class="controls-box">
+        <div class="slider-container">
+          <label for="uvRange"><span>Índice de Radiación UV Global</span> <span id="uvVal" style="color: #f59e0b; font-weight: 700;">6</span></label>
+          <input type="range" id="uvRange" min="1" max="11" value="6">
+        </div>
+        <button id="btnIniciar" class="action-btn">Cargar Secuencia Analítica</button>
+      </div>
+    </div>
+
+    <div class="narrative-panel">
+      <div class="assistant-header">
+        <div class="assistant-avatar">🤖</div>
+        <div class="assistant-meta">
+          <h3>Asistente Operativo AI</h3>
+          <p>Análisis Teórico-Práctico Integrado</p>
+        </div>
+      </div>
+      <div class="dialogue-content-area">
+        <div id="tituloExplicacion" class="dialogue-title">Inicialización del Sistema</div>
+        <p id="cuerpoExplicacion" class="dialogue-body">Esperando autenticación...</p>
+      </div>
+      <div class="footer-navigation">
+        <button id="btnSiguiente" class="next-btn" disabled>Siguiente Diálogo ➔</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
