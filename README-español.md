@@ -48,3 +48,12 @@ Se requiere permiso explícito del autor para copiar, redistribuir o utilizar pa
 ## Algo más
 
 Si buscas la licencia `LICENSE.md` en español, por motivos de lenguaje en el que inglés es el idioma universal, estará en inglés
+
+---
+
+## Sobre el archivo `something.md`
+
+aquí te dejo el archivo `something.md` traducido
+
+No creo que haya más actualizaciones; es complicado, ya que se trata de un proyecto grande y un buen paso adelante. Y si te preguntas dónde encontrar más archivos, hay dos en la carpeta «www».
+Para instalar el proyecto, extrae los archivos (scripts, index.html y renderer.js) y, a continuación, sigue las instrucciones que aparecen en el archivo README.md.
