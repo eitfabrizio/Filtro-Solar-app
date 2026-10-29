@@ -42,3 +42,8 @@ To open and run the project on your computer in development mode, you need to ru
 Filtro-Solar-app is a self-authored school project developed by **Fabrizio**.
 
 Explicit permission from the author is required before copying, redistributing, or using substantial parts of this code.
+
+---
+## 💬 🔍 Something else
+
+The spanish README is in `https://github.com/eitfabrizio/Filtro-Solar-app/blob/main/README-espa%C3%B1ol.md` El README en español está en `https://github.com/eitfabrizio/Filtro-Solar-app/blob/main/README-espa%C3%B1ol.md`
