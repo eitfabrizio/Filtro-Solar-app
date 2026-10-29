@@ -42,4 +42,3 @@ To open and run the project on your computer in development mode, you need to ru
 Filtro-Solar-app is a self-authored school project developed by **Fabrizio**.
 
 Explicit permission from the author is required before copying, redistributing, or using substantial parts of this code.
-Se requiere el permiso explícito del autor antes de copiar, redistribuir o utilizar partes sustanciales de este código.
