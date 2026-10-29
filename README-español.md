@@ -45,6 +45,6 @@ Se requiere permiso explícito del autor para copiar, redistribuir o utilizar pa
 
 ---
 
-##Algo más
+## Algo más
 
 Si buscas la licencia `LICENSE.md` en español, por motivos de lenguaje en el que ingléses el idioma universal, estará en inglés
