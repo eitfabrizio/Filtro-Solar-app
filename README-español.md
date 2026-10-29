@@ -43,6 +43,8 @@ Filtro-Solar-app es un proyecto escolar de autoría propia, desarrollado por **F
 
 Se requiere permiso explícito del autor para copiar, redistribuir o utilizar partes sustanciales de este código.
 
+---
+
 ##Algo más
 
 Si buscas la licencia `LICENSE.md` en español, por motivos de lenguaje en el que ingléses el idioma universal, estará en inglés
