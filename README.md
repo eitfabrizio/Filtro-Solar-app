@@ -47,3 +47,5 @@ Explicit permission from the author is required before copying, redistributing, 
 ## 💬 🔍 Something else
 
 The spanish README is in `https://github.com/eitfabrizio/Filtro-Solar-app/blob/main/README-espa%C3%B1ol.md` El README en español está en `https://github.com/eitfabrizio/Filtro-Solar-app/blob/main/README-espa%C3%B1ol.md`
+
+The something.md file is an archive that you can read to find something else
