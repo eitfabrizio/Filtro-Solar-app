@@ -42,3 +42,7 @@ Para abrir y ejecutar el proyecto en tu computadora en modo de desarrollo, debes
 Filtro-Solar-app es un proyecto escolar de autoría propia, desarrollado por **Fabrizio**.
 
 Se requiere permiso explícito del autor para copiar, redistribuir o utilizar partes sustanciales de este código.
+
+##Algo más
+
+Si buscas la lisecia ´LICENSE.md´ en español, por motivos de lenguaje en el que ingléses el idioma universal, estará en inglés
