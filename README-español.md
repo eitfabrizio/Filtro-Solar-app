@@ -13,7 +13,7 @@ La aplicación combina un entorno web moderno con un contenedor móvil mediante 
 Si buscas el instalador directo para probar la aplicación en tu teléfono móvil, no es necesario compilar nada a partir del código fuente. El archivo ejecutable ya se encuentra disponible en este repositorio.
 
 Puedes encontrar el instalador y su guía de uso específica en la siguiente ruta:
-👉 `(https://github.com/eitfabrizio/Filtro-Solar-app/releases/tag/APK)`
+👉 `https://github.com/eitfabrizio/Filtro-Solar-app/releases/tag/APK`
 
 Allí encontrarás:
 * 📱 **`app-release.apk`**: El archivo instalador final para tu teléfono.
@@ -45,4 +45,4 @@ Se requiere permiso explícito del autor para copiar, redistribuir o utilizar pa
 
 ##Algo más
 
-Si buscas la lisecia ´LICENSE.md´ en español, por motivos de lenguaje en el que ingléses el idioma universal, estará en inglés
+Si buscas la lisecia `LICENSE.md` en español, por motivos de lenguaje en el que ingléses el idioma universal, estará en inglés
